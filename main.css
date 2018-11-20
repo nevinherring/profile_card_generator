@@ -11,3 +11,24 @@
     border-left: 1pc solid #d9d9d9;
     min-height: 840px;
 }
+
+.card {
+    margin-bottom: 20px;
+    height: 180px;
+}
+
+.card-text {
+    color: #00bcd4;
+    margin-bottom: 0;
+}
+
+.card-delete{
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    line-height: 9px;
+    padding: 5px 15px;
+    font-size: 17px;
+    color: #f44336;
+    cursor: pointer;
+}
