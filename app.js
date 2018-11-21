@@ -19,7 +19,7 @@ var db = [
 
             template += '<div class="col-sm-4">';
             template +=     '<div class="card">';
-            template +=         '<div class="card-delete" data-card="">x</div>';
+            template +=         '<div class="card-delete" data-card="'+ i +'">x</div>';
             template +=         '<div class="card-block">';
             template +=             '<h3 class="card-title">'+ db[i].name +'</h3>';
             template +=             '<p class="card-text"><strong>Email: </strong>'+ db[i].email +'</p>';
@@ -31,6 +31,7 @@ var db = [
 
         parent.innerHTML= '';
         parent.insertAdjacentHTML('afterbegin', template);
+        deleteCard();
     };
 
     this.enterUser = function(){
@@ -39,10 +40,19 @@ var db = [
             var email = document.querySelector('#user_email').value;
             var age = document.querySelector('#user_age').value;
 
-            document.querySelector('#myForm').reset();
-
-            db.push({name:name, email:email, age:age});
-            generateList();
+            var elements = [name, email, age];
+            
+            if(validateUser(elements)){
+                document.querySelector('#myForm').reset();
+                db.push({name:name, email:email, age:age});
+                generateList();
+            }else{
+                document.querySelector('#error').style.display = "block";
+                setTimeout(function(){
+                    document.querySelector('#error').style.display = "none";
+                }, 2000);
+            }
+        
         }
 
         document.querySelector('#myForm').addEventListener('submit', function(e){
@@ -50,6 +60,41 @@ var db = [
             grabUser();
         });
     };
+
+    this.validateUser = function (inputs){
+        for(var i = 0; i < inputs.length; i++){
+            if(inputs[i] == ''){
+                return false;
+            }   
+        }
+        return true
+    }
+
+    this.deleteCard = function() {
+        var buttons =  document.querySelectorAll('.card-delete');
+        
+        function deleteThis(element){
+
+            var obj = parseInt(element.getAttribute('data-card'));
+
+            db.splice(obj, 1); //obj needs to be a number for splice to work, not a string
+            generateList();
+
+        };
+
+
+        for(var i = 0; i < buttons.length; i++){
+            buttons[i].addEventListener('click',function(){
+                
+                deleteThis(this);
+
+
+            });
+        }
+
+       
+    }
+
 
     this.init();
 })(db);

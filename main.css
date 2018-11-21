@@ -17,6 +17,10 @@
     height: 180px;
 }
 
+#error {
+    display: none;
+}
+
 .card-text {
     color: #00bcd4;
     margin-bottom: 0;
